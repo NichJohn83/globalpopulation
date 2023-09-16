@@ -41,7 +41,7 @@ def global_population() -> dict:
     population = get_population()
     logger.info(f"Current World Population is: {population} - {date.today()}")
     r.mset({
-        date.today().strftime("%Y/%m/%d"): population
+        date.today().strftime("%Y-%m-%d"): population
     })
     population_delta = get_population_delta(current_population=population)
     if population_delta:
@@ -94,7 +94,7 @@ def get_population_delta(current_population) -> int:
     logger.info("called")
     yesterday = date.today() + timedelta(days=-1)
     logger.info(f"Yesterday's Date: {yesterday}")
-    YESTERDAY_POPULATION = r.get(yesterday.strftime("%Y/%m/%d"))
+    YESTERDAY_POPULATION = r.get(yesterday.strftime("%Y-%m-%d"))
     if not YESTERDAY_POPULATION:
         return None
     
