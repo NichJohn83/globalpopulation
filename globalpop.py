@@ -57,7 +57,7 @@ def make_tweet(population, pop_delta):
         tweet_text = f"Today's Population is {population:,}"
 
         if pop_delta is not None:
-            tweet_text += f"\n({pop_delta})"
+            tweet_text += f"\n({pop_delta:,})"
 
         response = client.create_tweet(text=tweet_text, user_auth=True)
 
