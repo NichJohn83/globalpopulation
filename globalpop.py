@@ -57,7 +57,10 @@ def make_tweet(population, pop_delta):
         tweet_text = f"Today's Population is {population:,}"
 
         if pop_delta is not None:
-            tweet_text += f"\n({pop_delta:,})"
+            if pop_delta < 0:
+                tweet_text += f"\n({pop_delta:,})"
+            elif pop_delta > 0:
+                tweet_text += f"\n(+{pop_delta:,})"
 
         response = client.create_tweet(text=tweet_text, user_auth=True)
 
@@ -100,7 +103,7 @@ def get_population_delta(current_population) -> int:
     
     logger.info(f"Yesterday's Population: {YESTERDAY_POPULATION}")
 
-    return current_population - int(YESTERDAY_POPULATION) if current_population < int(YESTERDAY_POPULATION) else f'+{current_population - int(YESTERDAY_POPULATION)}'
+    return current_population - int(YESTERDAY_POPULATION) if current_population < int(YESTERDAY_POPULATION) else current_population - int(YESTERDAY_POPULATION)
 
 
 def _get_twitter_client():
@@ -112,5 +115,5 @@ def _get_twitter_client():
         access_token_secret=access_token_secret,
     )
 
-
 sched.start()
+
